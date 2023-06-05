@@ -62,14 +62,17 @@ xcframework_name () {
 generate_sources () {
     local sources="$1"
     # Create the sources folder
-    mkdir $sources
+        echo "1"
+    mkdir -p $sources
+        echo "12"
     # Create the sources for the umbrella header and modulemap
-    mkdir "$sources/Realm"
+    mkdir -p "$sources/Realm"
+    echo "123"
     cp -f "Realm.h" "$sources/Realm"
     cp -f "Realm.modulemap" "$sources/Realm"
     touch "$sources/Realm/dummy.m" # SPM requires at least one source file
 
-    mkdir "$sources/RealmSwift"
+    mkdir -p "$sources/RealmSwift"
     touch "$sources/RealmSwift/dummy.m"
 }
 
@@ -115,7 +118,7 @@ set -o pipefail
 
 # Repos
 realm_repo="https://github.com/realm/realm-swift"
-xcframeworks_repo="https://github.com/RomanEsin/RealmBinary"
+xcframeworks_repo="https://github.com/makcimyc92/RealmBinary"
 
 # Release versions
 latest=$(latest_release_number $realm_repo)
@@ -168,7 +171,7 @@ if [[ $latest != $current || $debug ]]; then
     mv "$scratch/../$package" "$package"
     
     # Skips deploy
-    if [[ $skip_release ]]; then echo "Done."; exit 0; fi
+    #if [[ $skip_release ]]; then echo "Done."; exit 0; fi
 
     # Deploy to repository
     echo "Merging changes to Github..."
